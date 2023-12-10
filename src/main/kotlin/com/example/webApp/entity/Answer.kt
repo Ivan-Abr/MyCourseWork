@@ -14,7 +14,7 @@ public class Answer(
 
     @ManyToOne
         @JoinColumn(name="mark_id")
-        var question: Question? = null,
+        var question: Mark? = null,
 
     @ManyToOne
         @JoinColumn(name="org_id")

@@ -16,9 +16,9 @@ public class Question(
     @JoinColumn(name = "layer_id")
     var layer: Layer? = null,
 
-//    @OneToMany(mappedBy = "question")
-//    @JsonIgnore
-//    var answers: Set<Answer>? = HashSet(),
+    @OneToMany
+    @JsonIgnore
+    var marks: Set<Mark>? = HashSet(),
 
     @JsonProperty("question_name")
     @Column(name = "question_name", length = 100)
