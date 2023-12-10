@@ -1,14 +1,9 @@
 package com.example.webApp.config
 
-import com.example.webApp.entity.Mark
-import com.example.webApp.repository.MarkRepo
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.CommandLineRunner
-import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 @Configuration
-class MarkConfig {
+class QuestionConfig {
 //    @Bean
 //    fun commandLineRunnerMark(@Autowired markRepo: MarkRepo):CommandLineRunner{
 //        return CommandLineRunner {

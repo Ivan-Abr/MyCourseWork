@@ -48,11 +48,11 @@ class AnswerController(private var answerService: AnswerService) {
         return answerService.getAnswerById(answerId)
     }
 
-    @GetMapping(path = ["all/layer/{layerId}/org/{orgId}"])
-    fun getAllData(@PathVariable("layerId") layerId:Long,
-                   @PathVariable("orgId") orgId:Long): Object{
-        return answerService.getAllData(layerId,orgId)
-    }
+//    @GetMapping(path = ["all/layer/{layerId}/org/{orgId}"])
+//    fun getAllData(@PathVariable("layerId") layerId:Long,
+//                   @PathVariable("orgId") orgId:Long): Object{
+//        return answerService.getAllData(layerId,orgId)
+//    }
 
     @Operation(summary = "Создание нового ответа")
     @PostMapping

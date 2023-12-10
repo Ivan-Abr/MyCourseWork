@@ -1,9 +1,9 @@
 package com.example.webApp.service
 
 import com.example.webApp.entity.Layer
-import com.example.webApp.entity.Mark
+import com.example.webApp.entity.Question
 import com.example.webApp.repository.LayerRepo
-import com.example.webApp.repository.MarkRepo
+import com.example.webApp.repository.QuestionRepo
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 import java.util.Optional
@@ -11,7 +11,7 @@ import java.util.Optional
 @Service
 class LayerService(
     private var layerRepo: LayerRepo,
-    private var markRepo: MarkRepo
+    private var questionRepo: QuestionRepo
 ) {
 
     fun getLayers(): List<Layer>{
@@ -53,9 +53,9 @@ class LayerService(
     }
     fun assignMarksToLayer(layerId: Long, markId: Long): Layer?{
         val layer = layerRepo.findById(layerId).get()
-        val mark = markRepo.findById(markId).get()
+        val mark = questionRepo.findById(markId).get()
 
-        layer.marks = (layer.marks as MutableSet<Mark?>?:HashSet()).apply {
+        layer.questions = (layer.questions as MutableSet<Question?>?:HashSet()).apply {
             add(mark)
         }
         return  layerRepo.save(layer)

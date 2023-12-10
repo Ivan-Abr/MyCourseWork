@@ -13,7 +13,7 @@ data class Layer(
     var layerId: Long = 0L,
 
     @OneToMany(mappedBy="layer")
-    var marks:Set<Mark?>? = HashSet(),
+    var questions:Set<Question?>? = HashSet(),
 
 
 
@@ -23,6 +23,6 @@ data class Layer(
 
     ) {
     override fun toString(): String {
-        return "Layer(layerId=$layerId, marks=$marks, layerName='$layerName')"
+        return "Layer(layerId=$layerId, marks=$questions, layerName='$layerName')"
     }
 }

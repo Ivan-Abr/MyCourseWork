@@ -7,20 +7,20 @@ import jakarta.persistence.*
 @Entity
 @Table(name = "answer")
 public class Answer(
-        @Id
+    @Id
         @JsonProperty("answer_id")
         @Column(name = "answer_id")
         var answerId: Long = 0L,
 
-        @ManyToOne
+    @ManyToOne
         @JoinColumn(name="mark_id")
-        var mark: Mark? = null,
+        var question: Question? = null,
 
-        @ManyToOne
+    @ManyToOne
         @JoinColumn(name="org_id")
         var organization: Organization? = null,
 
-        @ManyToOne
+    @ManyToOne
         @JoinColumn(name="milestone_id")
         var milestone: Milestone?,
 

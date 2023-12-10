@@ -2,17 +2,16 @@ package com.example.webApp.service
 
 import com.example.webApp.entity.Answer
 import com.example.webApp.repository.AnswerRepo
-import com.example.webApp.repository.MarkRepo
+import com.example.webApp.repository.QuestionRepo
 import com.example.webApp.repository.OrgRepo
-import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 import java.util.*
 import kotlin.collections.HashSet
 
 @Service
 class AnswerService(private var answerRepo: AnswerRepo,
-    private var markRepo: MarkRepo,
-    private var orgRepo: OrgRepo) {
+                    private var questionRepo: QuestionRepo,
+                    private var orgRepo: OrgRepo) {
     fun getBooks(): List<Answer> {
         return answerRepo.findAll() as List<Answer>
     }
@@ -24,9 +23,9 @@ class AnswerService(private var answerRepo: AnswerRepo,
         return answerRepo.findById(answerId)
     }
 
-    fun getAllData(layerId: Long, orgId: Long): Object{
-        return answerRepo.getAllByAnswer(layerId, orgId)
-    }
+//    fun getAllData(layerId: Long, orgId: Long): Object{
+//        return answerRepo.getAllByAnswer(layerId, orgId)
+//    }
 
     fun addNewAnswer(answer: Answer?): Answer? {
         if (answer == null) return null
@@ -42,14 +41,14 @@ class AnswerService(private var answerRepo: AnswerRepo,
     }
 
 
-    fun assignMarktoAnswer(answerId:Long, markId:Long):Answer?{
-        val answer = answerRepo.findById(answerId).get()
-        val mark = markRepo.findById(markId).get()
-        answer.mark = mark
-        mark.answers = (mark.answers as MutableSet<Answer>?: HashSet()).apply { add(answer) }
-        //markRepo.save(mark)
-        return  answerRepo.save(answer)
-        }
+//    fun assignMarktoAnswer(answerId:Long, markId:Long):Answer?{
+//        val answer = answerRepo.findById(answerId).get()
+//        val mark = questionRepo.findById(markId).get()
+//        answer.question = mark
+//        mark.answers = (mark.answers as MutableSet<Answer>?: HashSet()).apply { add(answer) }
+//        //markRepo.save(mark)
+//        return  answerRepo.save(answer)
+//        }
 
     fun assignOrgToAnswer(answerId: Long, orgId:Long): Answer?{
         val answer = answerRepo.findById(answerId).get()

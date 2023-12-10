@@ -1,6 +1,5 @@
 package com.example.webApp.repository
 
-import com.example.webApp.entity.Mark
 import com.example.webApp.entity.Organization
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query

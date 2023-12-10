@@ -2,9 +2,8 @@ package com.example.webApp.controller
 
 import com.example.webApp.entity.Answer
 import com.example.webApp.entity.Layer
-import com.example.webApp.entity.Mark
-import com.example.webApp.entity.Organization
-import com.example.webApp.service.MarkService
+import com.example.webApp.entity.Question
+import com.example.webApp.service.QuestionService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.media.ArraySchema
@@ -16,8 +15,8 @@ import org.springframework.web.bind.annotation.*
 import java.util.*
 
 @RestController
-@RequestMapping("dm/v1/mark")
-class MarkController(private var markService: MarkService) {
+@RequestMapping("dm/v1/question")
+class QuestionController(private var questionService: QuestionService) {
 
     @Operation(summary = "Выбор всех существующих показателей")
     @ApiResponses(
@@ -27,8 +26,8 @@ class MarkController(private var markService: MarkService) {
         ApiResponse(responseCode = "404", description = "Показатели не найдены", content = [Content()]),
     )
     @GetMapping
-    fun getMarks(): List<Mark> {
-        return markService.getMarks()
+    fun getQuestions(): List<Question> {
+        return questionService.getQuestions()
     }
 
     @Operation(summary = "Выбор показателя по его номеру")
@@ -37,48 +36,48 @@ class MarkController(private var markService: MarkService) {
             array = ArraySchema(schema = Schema(implementation = Answer::class)))]),
         ApiResponse(responseCode = "400",  description =  "Введен неверный номер", content = [Content()]),
         ApiResponse(responseCode = "404", description = "Показатель не найден", content = [Content()]),)
-    @GetMapping(path = ["{markId}"])
-    fun getMarkById(@PathVariable("markId") markId: Long): Optional<Mark> {
-        return markService.getMarkById(markId)
+    @GetMapping(path = ["{questionId}"])
+    fun getQuestionById(@PathVariable("questionId") questionId: Long): Optional<Question> {
+        return questionService.getQuestionById(questionId)
     }
 
 
     @Operation(summary = "Создание нового показателя")
     @PostMapping
-    fun registerNewMark(@Parameter(description = "объект  для добавления ",
+    fun registerNewQuestion(@Parameter(description = "объект  для добавления ",
         schema = Schema(implementation = Answer::class))
-        @RequestBody book: Mark) {
-        markService.addNewMark(book)
+        @RequestBody book: Question) {
+        questionService.addNewQuestion(book)
     }
 
     @Operation(summary = "Удаление существующего показателя по его номеру")
-    @DeleteMapping(path = ["{markId}"])
-    fun deleteMark(@Parameter(description = "номер для поиска показателя")
-        @PathVariable("markId") markId: Long?) {
-        markService.deleteMark(markId!!)
+    @DeleteMapping(path = ["{questionId}"])
+    fun deleteQuestion(@Parameter(description = "номер для поиска показателя")
+        @PathVariable("questionId") questionId: Long?) {
+        questionService.deleteQuestion(questionId!!)
     }
 
     @Operation(summary = "Изменение существующего показателя по его номеру")
-    @PutMapping(path = ["{markId}"])
-    fun updateMark(
+    @PutMapping(path = ["{questionId}"])
+    fun updateQuestion(
         @Parameter(description = "номер для поиска показателя")
-        @PathVariable("markId") markId: Long,
+        @PathVariable("questionId") questionId: Long,
         @Parameter(description = "новое имя")
-        @RequestParam(required = false) markName: String,
+        @RequestParam(required = false) questionName: String,
         @Parameter(description = "новое описание")
-        @RequestParam(required = false) markAnnot: String
+        @RequestParam(required = false) questionAnnot: String
     ){
-        markService.updateMark(markId,markName,markAnnot)
+        questionService.updateQuestion(questionId,questionName,questionAnnot)
     }
 
-    @Operation(summary = "Присоединение ответа к показателю")
-    @PutMapping(path = ["{markId}/answer/{answerId}"])
-    fun assignAnswertoOrg(
-        @Parameter(description = "номер для поиска показателя")
-        @PathVariable markId: Long,
-        @Parameter(description = "номер для поиска ответа")
-        @PathVariable answerId: Long
-    ): Mark? {return markService.addAnswerToMark(markId,answerId)}
-    //hi
+//    @Operation(summary = "Присоединение ответа к показателю")
+//    @PutMapping(path = ["{questionId}/answer/{answerId}"])
+//    fun assignAnswertoOrg(
+//        @Parameter(description = "номер для поиска показателя")
+//        @PathVariable questionId: Long,
+//        @Parameter(description = "номер для поиска ответа")
+//        @PathVariable answerId: Long
+//    ): Question? {return questionService.addAnswerToQuestion(questionId,answerId)}
+//    //hi
     
 }
