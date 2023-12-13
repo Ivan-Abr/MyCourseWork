@@ -1,5 +1,6 @@
 package com.example.webApp.entity
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
 import jakarta.persistence.*
 
@@ -13,8 +14,13 @@ data class Layer(
     var layerId: Long = 0L,
 
     @OneToMany(mappedBy="layer")
+    @JsonIgnore
     var questions:Set<Question?>? = HashSet(),
 
+    @ManyToOne
+    @JoinColumn(name = "factor_id")
+    @JsonIgnore
+    var factor: Factor? = null,
 
 
     @JsonProperty("layer_name")
