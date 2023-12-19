@@ -14,7 +14,7 @@ class Factor(
 
     @OneToMany(mappedBy="factor")
     @JsonIgnore
-    var layers:Set<Layer?>? = HashSet(),
+    var questionss:Set<Question?>? = HashSet(),
 
     @JsonProperty("factor_name")
     @Column(name = "factor_name")

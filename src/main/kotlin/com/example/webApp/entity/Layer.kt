@@ -16,11 +16,6 @@ data class Layer(
     @OneToMany(mappedBy="layer")
     var questions:Set<Question?>? = HashSet(),
 
-    @ManyToOne
-    @JsonIgnore
-    @JoinColumn(name = "factor_id")
-    var factor: Factor,
-
     @JsonProperty("layer_name")
     @Column(name = "layer_name", length = 100)
     var layerName: String

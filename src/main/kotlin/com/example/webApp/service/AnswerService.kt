@@ -7,6 +7,7 @@ import com.example.webApp.repository.OrgRepo
 import org.springframework.stereotype.Service
 import java.util.*
 import kotlin.collections.HashSet
+import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 
 @Service
 class AnswerService(private var answerRepo: AnswerRepo,
@@ -23,9 +24,16 @@ class AnswerService(private var answerRepo: AnswerRepo,
         return answerRepo.findById(answerId)
     }
 
-    fun getAllData(layerId: Long, orgId: Long): Object{
-        return answerRepo.getAllByAnswer(layerId, orgId)
+    fun getAllDataByLayerOrg(layerId: Long, orgId: Long): Object{
+        return answerRepo.getAllByLayerOrg(layerId, orgId)
     }
+
+    fun getAllDataByOrg(orgId: Long): List<Object>{
+        return answerRepo.getAllByOrgId(orgId)
+    }
+
+    fun getAllDatabyFactorOrg(factorId: Long, orgId: Long): Object{
+        return answerRepo.getAllByFactorOrg(factorId, orgId)}
 
     fun addNewAnswer(answer: Answer?): Answer? {
         if (answer == null) return null
@@ -58,6 +66,4 @@ class AnswerService(private var answerRepo: AnswerRepo,
         //orgRepo.save(org)
         return answerRepo.save(answer)
     }
-
-
 }

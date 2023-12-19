@@ -47,11 +47,28 @@ class AnswerController(private var answerService: AnswerService) {
     fun getAnswerById(@Parameter(description = "номер для поиска ответа") @PathVariable("answerId") answerId: Long): Optional<Answer> {
         return answerService.getAnswerById(answerId)
     }
-
+    @Operation(summary = "Спец выборка по номеру слоя и организации")
+    @ApiResponses(
+        ApiResponse(responseCode = "200", description = "Ответ найден", content = [Content(mediaType = "application/json",
+            array = ArraySchema(schema = Schema(implementation = Answer::class)))]),
+        ApiResponse(responseCode = "400",  description =  "Введен неверный номер", content = [Content()]),
+        ApiResponse(responseCode = "404", description = "Ответ не найден", content = [Content()]),
+    )
     @GetMapping(path = ["all/layer/{layerId}/org/{orgId}"])
-    fun getAllData(@PathVariable("layerId") layerId:Long,
+    fun getAllDataByLayerOrg(@PathVariable("layerId") layerId:Long,
                    @PathVariable("orgId") orgId:Long): Object{
-        return answerService.getAllData(layerId,orgId)
+        return answerService.getAllDataByLayerOrg(layerId,orgId)
+    }
+
+    @GetMapping(path = ["all/org/{orgId}"])
+    fun getAllDataByOrg(@PathVariable("orgId") orgId:Long): List<Object>{
+        return answerService.getAllDataByOrg(orgId)
+    }
+
+    @GetMapping(path = ["all/factor/{factorId}/org/{orgId}"])
+    fun getAllDataByFactorOrg(@PathVariable("layerId") layerId:Long,
+                   @PathVariable("orgId") orgId:Long): Object{
+        return answerService.getAllDatabyFactorOrg(layerId,orgId)
     }
 
     @Operation(summary = "Создание нового ответа")
@@ -68,21 +85,5 @@ class AnswerController(private var answerService: AnswerService) {
     fun deleteAnswer(@Parameter(description = "номер для поиска ответа") @PathVariable("answerId") answerId: Long?) {
         answerService.deleteAnswer(answerId!!)
     }
-            
-//    @PutMapping(path = ["{answerId}/mark/{markId}"])
-//    fun assignMarkToAnswer(
-//        @PathVariable answerId: Long,
-//        @PathVariable markId: Long
-//    ): Answer?{
-//        return answerService.assignMarktoAnswer(answerId,markId)
-//    }
 
-
-//    @PutMapping(path = ["{answerId}/org/{orgId}"])
-//    fun assignOrgToAnswer(
-//        @PathVariable answerId: Long,
-//        @PathVariable orgId: Long
-//    ): Answer?{
-//        return answerService.assignOrgToAnswer(answerId, orgId)
-//    }
 }
