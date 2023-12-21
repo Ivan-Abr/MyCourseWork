@@ -46,7 +46,7 @@ class QuestionController(private var questionService: QuestionService) {
     @PostMapping
     fun registerNewQuestion(@Parameter(description = "объект  для добавления ",
         schema = Schema(implementation = Answer::class))
-        @RequestBody book: Question){
+        @RequestBody book: Question) {
         questionService.addNewQuestion(book)
     }
 

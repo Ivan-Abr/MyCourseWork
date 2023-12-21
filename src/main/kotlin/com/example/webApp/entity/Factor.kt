@@ -12,15 +12,17 @@ class Factor(
     @Column(name = "factor_id")
     var factorId: Long,
 
-
     @OneToMany(mappedBy="factor")
     @JsonIgnore
-    var layers:Set<Layer?>? = HashSet(),
+    var questions:Set<Question?>? = HashSet(),
 
     @JsonProperty("factor_name")
     @Column(name = "factor_name")
-    var factorName: String,
+    var factorName:String,
 
+    @JsonProperty("factor_short_name")
+    @Column(name = "factor_short_name")
+    var factorShortName: String
 
 ) {
 }

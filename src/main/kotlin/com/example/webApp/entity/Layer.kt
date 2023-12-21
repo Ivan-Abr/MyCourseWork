@@ -14,18 +14,11 @@ data class Layer(
     var layerId: Long = 0L,
 
     @OneToMany(mappedBy="layer")
-    @JsonIgnore
     var questions:Set<Question?>? = HashSet(),
-
-    @ManyToOne
-    @JoinColumn(name = "factor_id")
-    @JsonIgnore
-    var factor: Factor? = null,
-
 
     @JsonProperty("layer_name")
     @Column(name = "layer_name", length = 100)
-    var layerName: String = ""
+    var layerName: String
 
     ) {
     override fun toString(): String {

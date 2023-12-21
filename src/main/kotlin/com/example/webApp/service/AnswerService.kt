@@ -2,15 +2,15 @@ package com.example.webApp.service
 
 import com.example.webApp.entity.Answer
 import com.example.webApp.repository.AnswerRepo
-import com.example.webApp.repository.QuestionRepo
 import com.example.webApp.repository.OrgRepo
 import org.springframework.stereotype.Service
+import java.lang.reflect.Field
 import java.util.*
-import kotlin.collections.HashSet
+import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 
 @Service
 class AnswerService(private var answerRepo: AnswerRepo,
-                    private var questionRepo: QuestionRepo,
+//                    private var dataRepo: AnsDataRepo,
                     private var orgRepo: OrgRepo) {
     fun getBooks(): List<Answer> {
         return answerRepo.findAll() as List<Answer>
@@ -23,9 +23,31 @@ class AnswerService(private var answerRepo: AnswerRepo,
         return answerRepo.findById(answerId)
     }
 
-//    fun getAllData(layerId: Long, orgId: Long): Object{
-//        return answerRepo.getAllByAnswer(layerId, orgId)
+    fun getAllDataByLayerOrg(layerId: Long, orgId: Long): Object{
+        return answerRepo.getAllByLayerOrg(layerId, orgId)
+    }
+
+    fun getAllDataByFactorOrg(factorId: Long, orgId: Long): Object{
+        return answerRepo.getAllByFactorOrg(factorId, orgId)
+    }
+
+    fun getAllDataByOrg(orgId: Long): List<Object>{
+        return answerRepo.getAllByOrgId(orgId)
+    }
+
+//    fun getAllDataByOrgNew(orgId: Long){
+//        var objList = answerRepo.getAllByOrgId(orgId)
+//        for (obj:Answer in objList){
+//            var clazz: Class<*> = obj.getClass()
+//            var field: Field = clazz.getField("fieldName")
+//            var fieldValue: Object = field.get(obj) as Object
+//            println(fieldValue)
+//        }
 //    }
+
+
+
+
 
     fun addNewAnswer(answer: Answer?): Answer? {
         if (answer == null) return null
@@ -58,6 +80,4 @@ class AnswerService(private var answerRepo: AnswerRepo,
         //orgRepo.save(org)
         return answerRepo.save(answer)
     }
-
-
 }
