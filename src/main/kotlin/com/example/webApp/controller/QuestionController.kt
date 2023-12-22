@@ -70,14 +70,14 @@ class QuestionController(private var questionService: QuestionService) {
         questionService.updateQuestion(questionId,questionName,questionAnnot)
     }
 
-//    @Operation(summary = "Присоединение ответа к показателю")
-//    @PutMapping(path = ["{questionId}/answer/{answerId}"])
-//    fun assignAnswertoOrg(
-//        @Parameter(description = "номер для поиска показателя")
-//        @PathVariable questionId: Long,
-//        @Parameter(description = "номер для поиска ответа")
-//        @PathVariable answerId: Long
-//    ): Question? {return questionService.addAnswerToQuestion(questionId,answerId)}
-//    //hi
+    @Operation(summary = "Присоединение оценки к показателю")
+    @PutMapping(path = ["{questionId}/mark/{markId}"])
+    fun assignAnswertoOrg(
+        @Parameter(description = "номер для поиска показателя")
+        @PathVariable questionId: Long,
+        @Parameter(description = "номер для поиска ответа")
+        @PathVariable markId: Long
+    ): Question? {return questionService.addMarkToQuestion(questionId,markId)}
+
     
 }

@@ -32,10 +32,10 @@ class AnswerController(private var answerService: AnswerService) {
         return answerService.getBooks()
     }
 
-    @GetMapping("/test")
-    fun getTestString():String{
-        return "Test"
-    }
+//    @GetMapping("/test")
+//    fun getTestString():String{
+//        return "Test"
+//    }
 
 
     @Operation(summary = "Выбор ответа по его номеру")

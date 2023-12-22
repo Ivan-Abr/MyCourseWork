@@ -24,7 +24,7 @@ import java.util.*
 class FactorController(private var factorService: FactorService) {
 
 
-    @Operation(summary = "Выбор всех существующих слоёв")
+    @Operation(summary = "Выбор всех существующих факторов")
     @ApiResponses(
         ApiResponse(responseCode = "200", description = "Фактор найден", content = [Content(mediaType = "application/json",
             array = ArraySchema(schema = Schema(implementation = Factor::class))
@@ -36,20 +36,20 @@ class FactorController(private var factorService: FactorService) {
         return factorService.getFactors()
     }
 
-    @GetMapping(path = ["export/excel"])
-    @Throws(IOException::class)
-    fun exportToExcel(response: HttpServletResponse){
-        response.contentType = "application/octet-stream"
-        var dateFormatter: DateFormat = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss")
-        var currentDateTime: String = dateFormatter.format(Date())
-
-        var headerKey: String = "Content-Disposition"
-        var headerValue: String = "attachment; filename=users_"+currentDateTime+".xlsx"
-        response.setHeader(headerKey, headerValue)
-        var listFactors: List<Factor> = factorService.getFactors()
-        var excelExporter = ExcelExporter(listFactors)
-        excelExporter.export(response)
-    }
+//    @GetMapping(path = ["export/excel"])
+//    @Throws(IOException::class)
+//    fun exportToExcel(response: HttpServletResponse){
+//        response.contentType = "application/octet-stream"
+//        var dateFormatter: DateFormat = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss")
+//        var currentDateTime: String = dateFormatter.format(Date())
+//
+//        var headerKey: String = "Content-Disposition"
+//        var headerValue: String = "attachment; filename=users_"+currentDateTime+".xlsx"
+//        response.setHeader(headerKey, headerValue)
+//        var listFactors: List<Factor> = factorService.getFactors()
+//        var excelExporter = ExcelExporter(listFactors)
+//        excelExporter.export(response)
+//    }
 
     @Operation(summary = "Выбор фактора по его номеру")
     @ApiResponses(

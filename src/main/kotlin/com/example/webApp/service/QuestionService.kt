@@ -1,8 +1,10 @@
 package com.example.webApp.service
 
 import com.example.webApp.entity.Answer
+import com.example.webApp.entity.Mark
 import com.example.webApp.entity.Question
 import com.example.webApp.repository.AnswerRepo
+import com.example.webApp.repository.MarkRepo
 import com.example.webApp.repository.QuestionRepo
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
@@ -11,6 +13,7 @@ import java.util.*
 @Service
 class QuestionService (
     private var questionRepo: QuestionRepo,
+    private var markRepo: MarkRepo,
     private var answerRepo: AnswerRepo
 ){
     fun getQuestions(): List<Question> {
@@ -53,16 +56,12 @@ class QuestionService (
         return question
     }
 
-//    @Transactional
-//    fun addAnswerToQuestion(questionId: Long, answerId: Long): Question?{
-//        val question = questionRepo.findById(questionId).get()
-//        val answer = answerRepo.findById(answerId).get()
-//        question.answers = (question.answers as MutableSet<Answer>?)?.apply { add(answer) }
-//        return questionRepo.save(question)
-//    }
-
-
-
-
+    @Transactional
+    fun addMarkToQuestion(questionId: Long, markId: Long): Question?{
+        val question = questionRepo.findById(questionId).get()
+        val mark = markRepo.findById(markId).get()
+        question.marks = (question.marks as MutableSet<Mark>?)?.apply { add(mark) }
+        return questionRepo.save(question)
+    }
 
 }
