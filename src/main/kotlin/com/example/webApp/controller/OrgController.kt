@@ -51,8 +51,8 @@ class OrgController (private var orgService: OrgService){
     @PostMapping
     fun registerNewOrg(@Parameter(description = "объект  для добавления ",
         schema = Schema(implementation = Answer::class))
-        @RequestBody book: Organization) {
-        orgService.addNewOrg(book)
+        @RequestBody org: Organization) {
+        orgService.addNewOrg(org)
     }
 
     @Operation(summary = "Удаление существующей организации по его номеру")
@@ -67,13 +67,20 @@ class OrgController (private var orgService: OrgService){
     fun updateOrg(
         @Parameter(description = "номер для поиска организации")
         @PathVariable("orgId") orgId: Long,
-        @Parameter(description = "новое имя")
-        @RequestParam(required = false) orgName: String?,
-        @Parameter(description = "новое описание")
-        @RequestParam(required = false) orgAnnot: String?
-    ){
-        orgService.updateOrg(orgId,orgName,orgAnnot)
+        @RequestBody org: Organization){
+        orgService.updateOrg(orgId,org.orgName,org.orgAnnot, org.orgContacts)
     }
+
+
+
+
+//        @Parameter(description = "новое имя")
+//        @RequestParam(required = false) orgName: String?,
+//        @Parameter(description = "новое описание")
+//        @RequestParam(required = false) orgAnnot: String?,
+//        @Parameter(description = "новые контакты")
+//        @RequestParam(required = false) orgContacts: String?,
+
 
 
     @Operation(summary = "Присоединение ответа к организации")
