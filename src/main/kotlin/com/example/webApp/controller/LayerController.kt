@@ -66,19 +66,19 @@ class LayerController(private var layerService: LayerService) {
         @Parameter(description = "номер для поиска слоя")
         @PathVariable("layerId") layerId: Long,
         @Parameter(description = "новое название")
-        @RequestParam(required = false) layerName: String
+        @RequestBody layer: Layer
     ){
-        layerService.updateLayer(layerId,layerName)
+        layerService.updateLayer(layerId,layer.layerName)
     }
 
-    @Operation(summary = "Присоединение показателя к слою")
-    @PutMapping(path = ["{layerId}/mark/{markId}"])
-    fun assignMarktoLayer(
-        @Parameter(description = "номер для поиска слоя")
-        @PathVariable layerId: Long,
-        @Parameter(description = "номер для поиска показателя")
-        @PathVariable markId: Long
-    ):Layer?{return layerService.assignMarksToLayer(layerId,markId)}
+//    @Operation(summary = "Присоединение показателя к слою")
+//    @PutMapping(path = ["{layerId}/mark/{markId}"])
+//    fun assignMarktoLayer(
+//        @Parameter(description = "номер для поиска слоя")
+//        @PathVariable layerId: Long,
+//        @Parameter(description = "номер для поиска показателя")
+//        @PathVariable markId: Long
+//    ):Layer?{return layerService.assignMarksToLayer(layerId,markId)}
 
 
 

@@ -42,12 +42,17 @@ class FactorService(
 
 
     @Transactional
-    fun updateFactor(factorId: Long, factorName: String): Factor? {
+    fun updateFactor(factorId: Long, factorName: String, factorShortName: String): Factor? {
         val factor = factorRepo.findById(factorId)
             .orElseThrow { java.lang.IllegalStateException("factor with id" + factorId + "does not exist") }
-        if (factorName != null && factorName.isNotEmpty() && factor.factorName != factorName) {
+        if (factorName.isNotEmpty() && factor.factorName != factorName) {
             factor.factorName = factorName
         }
+
+        if (factorShortName.isNotEmpty() && factor.factorShortName != factorShortName) {
+            factor.factorShortName = factorShortName
+        }
+
 
         return factor
     }

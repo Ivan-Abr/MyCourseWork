@@ -84,20 +84,21 @@ class FactorController(private var factorService: FactorService) {
     fun updateFactor(
         @Parameter(description = "номер для поиска фактора")
         @PathVariable("factorId") factorId: Long,
-        @Parameter(description = "новое название")
-        @RequestParam(required = false) factorName: String
+        @Parameter(description = "новые данные")
+        @RequestBody factor: Factor,
+
     ){
-        factorService.updateFactor(factorId,factorName)
+        factorService.updateFactor(factorId,factor.factorName, factor.factorShortName)
     }
 
-    @Operation(summary = "Присоединение показателя к фактору")
-    @PutMapping(path = ["{factorId}/question/{questionId}"])
-    fun assignMarktoFactor(
-        @Parameter(description = "номер для поиска фактора")
-        @PathVariable factorId: Long,
-        @Parameter(description = "номер для поиска показателя")
-        @PathVariable questionId: Long
-    ):Factor?{return factorService.assignMarksToFactor(factorId,questionId)}
+//    @Operation(summary = "Присоединение показателя к фактору")
+//    @PutMapping(path = ["{factorId}/question/{questionId}"])
+//    fun assignMarktoFactor(
+//        @Parameter(description = "номер для поиска фактора")
+//        @PathVariable factorId: Long,
+//        @Parameter(description = "номер для поиска показателя")
+//        @PathVariable questionId: Long
+//    ):Factor?{return factorService.assignMarksToFactor(factorId,questionId)}
 
 
 

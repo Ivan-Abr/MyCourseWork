@@ -26,9 +26,13 @@ class Factor(
 
 ) {
 
-    @get:JsonProperty("questionsIds")
-    val questionsIds: List<Long>?
-        get() {
-            return this.questions!!.map { question -> question!!.questionId  }
-        }
+//    @get:JsonProperty("questionsIds")
+//    val questionsIds: List<Long>?
+//        get() {
+//            return this.questions!!.map { question -> question!!.questionId  }
+//        }
+
+    override fun toString(): String {
+        return "Factor(factorId=$factorId, questions=$questions, factorName='$factorName', factorShortName='$factorShortName')"
+    }
 }
