@@ -1,9 +1,9 @@
 package com.example.webApp.service
 
-import com.example.webApp.entity.Answer
 import com.example.webApp.entity.Mark
 import com.example.webApp.entity.Question
 import com.example.webApp.repository.AnswerRepo
+import com.example.webApp.repository.FactorRepo
 import com.example.webApp.repository.MarkRepo
 import com.example.webApp.repository.QuestionRepo
 import jakarta.transaction.Transactional
@@ -14,7 +14,8 @@ import java.util.*
 class QuestionService (
     private var questionRepo: QuestionRepo,
     private var markRepo: MarkRepo,
-    private var answerRepo: AnswerRepo
+    private var answerRepo: AnswerRepo,
+    private var factorRepo: FactorRepo
 ){
     fun getQuestions(): List<Question> {
         return questionRepo.findAll() as List<Question>
@@ -37,19 +38,19 @@ class QuestionService (
         return questionRepo.save(question)
     }
 
-    fun deleteQuestion(QuestionId: Long) {
-        val exists = questionRepo.existsById(QuestionId)
+    fun deleteQuestion(questionId: Long) {
+        val exists = questionRepo.existsById(questionId)
         if (!exists) {
-            throw IllegalArgumentException("student with id" + QuestionId + "does not exist")
+            throw IllegalArgumentException("student with id" + questionId + "does not exist")
         }
-        questionRepo.deleteById(QuestionId)
+        questionRepo.deleteById(questionId)
     }
 
     @Transactional
-    fun updateQuestion(QuestionId: Long, name: String, annot: String): Question? {
-        val question = questionRepo.findById(QuestionId)
-            .orElseThrow { java.lang.IllegalStateException("student with id" + QuestionId + "does not exist") }
-        if (name != null && name.length > 0 && question.questionName != name) {
+    fun updateQuestion(questionId: Long, name: String, annot: String): Question? {
+        val question = questionRepo.findById(questionId)
+            .orElseThrow { java.lang.IllegalStateException("student with id" + questionId + "does not exist") }
+        if (name.isNotEmpty() && question.questionName != name) {
             question.questionName = name
         }
         question.questionAnnot = annot
@@ -61,6 +62,16 @@ class QuestionService (
         val question = questionRepo.findById(questionId).get()
         val mark = markRepo.findById(markId).get()
         question.marks = (question.marks as MutableSet<Mark>?)?.apply { add(mark) }
+        return questionRepo.save(question)
+    }
+
+    @Transactional
+    fun addFactorToQuestion(questionId:Long, factorId: Long): Question?{
+        val question = questionRepo.findById(questionId).get()
+        val factor = factorRepo.findById(factorId).get()
+        question.factor = factor
+        factor.questions  = (factor.questions as MutableSet<Question>?)?.apply { add(question) }
+        factorRepo.save(factor)
         return questionRepo.save(question)
     }
 

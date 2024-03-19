@@ -10,12 +10,13 @@ public class Question(
     @Id
     @JsonProperty("questionId")
     @Column(name = "questionId")
-    var questionId: Long = 0L,
+    @GeneratedValue
+    var questionId: Long,
 
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "layerId")
-    var layer: Layer? = null,
+    var layer: Layer?,
 
     @OneToMany
     @JsonIgnore
@@ -24,7 +25,7 @@ public class Question(
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "factorId")
-    var factor: Factor,
+    var factor: Factor?,
 
     @JsonProperty("questionName")
     @Column(name = "questionName", length = 100)
@@ -44,16 +45,16 @@ public class Question(
 
 
 
-    @get:JsonProperty("marksIds")
-    val marksIds: List<Long>?
-    get(){
-        return this.marks!!.map { mark -> mark.markId }
-    }
+//    @get:JsonProperty("marksIds")
+//    val marksIds: List<Long>?
+//    get(){
+//        return this.marks!!.map { mark -> mark.markId }
+//    }
 
     @get:JsonProperty()
     val factorId: Long
     get(){
-        return this.factor.factorId
+        return this.factor!!.factorId
     }
 
 

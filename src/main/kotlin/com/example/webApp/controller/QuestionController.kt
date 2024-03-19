@@ -80,5 +80,11 @@ class QuestionController(private var questionService: QuestionService) {
         @PathVariable markId: Long
     ): Question? {return questionService.addMarkToQuestion(questionId,markId)}
 
-    
+
+    @PutMapping(path = ["{questionId}/factor/{factorId}"])
+    fun assignFactorToQuestion(
+        @PathVariable questionId: Long,
+        @PathVariable factorId: Long
+    ): Question? {return questionService.addFactorToQuestion(questionId, factorId)}
+
 }
