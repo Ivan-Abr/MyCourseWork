@@ -17,6 +17,7 @@ import java.util.Optional
 
 
 @RestController
+@CrossOrigin(origins = ["http://localhost:3000"])
 @RequestMapping("dm/v1/milestone")
 class MilestoneController (private var milestoneService: MilestoneService){
 
@@ -64,12 +65,13 @@ class MilestoneController (private var milestoneService: MilestoneService){
     fun updateMileSt(
         @Parameter(description = "номер для поиска этапа")
         @PathVariable("milestoneId") milestoneId: Long,
-        @Parameter(description = "новая дата начала")
-        @RequestParam(required = false) dateFrom: LocalDate,
-        @Parameter(description = "новая дата окончания")
-        @RequestParam(required = false) dateTo: LocalDate
+        @RequestBody milestone: Milestone,
+//        @Parameter(description = "новая дата начала")
+//        @RequestParam(required = false) dateFrom: LocalDate,
+//        @Parameter(description = "новая дата окончания")
+//        @RequestParam(required = false) dateTo: LocalDate
     ){
-        milestoneService.updateMileSt(milestoneId,dateFrom,dateTo)
+        milestoneService.updateMileSt(milestoneId, milestone.dateFrom,milestone.dateTo)
     }
 
     @Operation(summary = "Присоединение ответа к этапу")

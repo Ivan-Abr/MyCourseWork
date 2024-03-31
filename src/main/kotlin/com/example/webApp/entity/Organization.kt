@@ -10,6 +10,7 @@ data class Organization(
     @Id
     @JsonProperty("orgId")
     @Column(name = "orgId")
+    @GeneratedValue
     var orgId: Long,
 
 

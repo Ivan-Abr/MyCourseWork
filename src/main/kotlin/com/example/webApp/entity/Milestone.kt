@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
+import jakarta.persistence.GeneratedValue
 import jakarta.persistence.Id
 import jakarta.persistence.OneToMany
 import jakarta.persistence.Table
@@ -18,6 +19,7 @@ data class Milestone (
     @Id
     @JsonProperty("milestone_id")
     @Column(name = "milestone_id")
+    @GeneratedValue
     var milestoneId: Long = 0L,
 
     @OneToMany(mappedBy = "milestone")
@@ -34,7 +36,7 @@ data class Milestone (
 
     @JsonProperty("year")
     @Column(name = "year")
-    var year: Year
+    var year: String
 
 ){
     override fun toString(): String {
