@@ -51,18 +51,14 @@ class LayerService(
 
         return layer
     }
-    fun assignMarksToLayer(layerId: Long, markId: Long): Layer?{
+    fun assignQuestionsToLayer(layerId: Long, questionId: Long): Layer?{
         val layer = layerRepo.findById(layerId).get()
-        val mark = questionRepo.findById(markId).get()
+        val question = questionRepo.findById(questionId).get()
 
-        layer.questions = (layer.questions as MutableSet<Question?>?:HashSet()).apply {
-            add(mark)
-        }
-        return  layerRepo.save(layer)
+        question.layer = layer
+        questionRepo.save(question)
 
-    }
-
-
-
+        layer.questions = (layer.questions as MutableSet<Question?>?:HashSet()).apply { add(question) }
+        return  layerRepo.save(layer) }
 
 }

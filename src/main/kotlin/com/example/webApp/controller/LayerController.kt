@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*
 import java.util.*
 
 @RestController
+@CrossOrigin(origins = ["http://localhost:3000"])
 @RequestMapping("dm/v1/layer")
 class LayerController(private var layerService: LayerService) {
 
@@ -65,19 +66,19 @@ class LayerController(private var layerService: LayerService) {
         @Parameter(description = "номер для поиска слоя")
         @PathVariable("layerId") layerId: Long,
         @Parameter(description = "новое название")
-        @RequestParam(required = false) layerName: String
+        @RequestBody layer: Layer
     ){
-        layerService.updateLayer(layerId,layerName)
+        layerService.updateLayer(layerId,layer.layerName)
     }
 
-    @Operation(summary = "Присоединение показателя к слою")
-    @PutMapping(path = ["{layerId}/mark/{markId}"])
-    fun assignMarktoLayer(
+    @Operation(summary = "Присоединение вопроса к слою")
+    @PutMapping(path = ["{layerId}/question/{questionId}"])
+    fun assignQuestionToLayer(
         @Parameter(description = "номер для поиска слоя")
         @PathVariable layerId: Long,
         @Parameter(description = "номер для поиска показателя")
-        @PathVariable markId: Long
-    ):Layer?{return layerService.assignMarksToLayer(layerId,markId)}
+        @PathVariable questionId: Long
+    ):Layer?{return layerService.assignQuestionsToLayer(layerId, questionId)}
 
 
 

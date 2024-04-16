@@ -15,13 +15,14 @@ import org.springframework.web.bind.annotation.*
 import java.util.*
 
 @RestController
+@CrossOrigin(origins = ["http://localhost:3000/"])
 @RequestMapping("dm/v1/question")
 class QuestionController(private var questionService: QuestionService) {
 
     @Operation(summary = "Выбор всех существующих показателей")
     @ApiResponses(
         ApiResponse(responseCode = "200", description = "Показатели найдены", content = [Content(mediaType = "application/json",
-            array = ArraySchema(schema = Schema(implementation = Layer::class))
+            array = ArraySchema(schema = Schema(implementation = Question::class))
         )]),
         ApiResponse(responseCode = "404", description = "Показатели не найдены", content = [Content()]),
     )
@@ -33,7 +34,7 @@ class QuestionController(private var questionService: QuestionService) {
     @Operation(summary = "Выбор показателя по его номеру")
     @ApiResponses(
         ApiResponse(responseCode = "200", description = "Показатель найден", content = [Content(mediaType = "application/json",
-            array = ArraySchema(schema = Schema(implementation = Answer::class)))]),
+            array = ArraySchema(schema = Schema(implementation = Question::class)))]),
         ApiResponse(responseCode = "400",  description =  "Введен неверный номер", content = [Content()]),
         ApiResponse(responseCode = "404", description = "Показатель не найден", content = [Content()]),)
     @GetMapping(path = ["{questionId}"])
@@ -45,7 +46,7 @@ class QuestionController(private var questionService: QuestionService) {
     @Operation(summary = "Создание нового показателя")
     @PostMapping
     fun registerNewQuestion(@Parameter(description = "объект  для добавления ",
-        schema = Schema(implementation = Answer::class))
+        schema = Schema(implementation = Question::class))
         @RequestBody book: Question) {
         questionService.addNewQuestion(book)
     }
@@ -62,22 +63,17 @@ class QuestionController(private var questionService: QuestionService) {
     fun updateQuestion(
         @Parameter(description = "номер для поиска показателя")
         @PathVariable("questionId") questionId: Long,
-        @Parameter(description = "новое имя")
-        @RequestParam(required = false) questionName: String,
-        @Parameter(description = "новое описание")
-        @RequestParam(required = false) questionAnnot: String
+        @RequestBody question: Question,
     ){
-        questionService.updateQuestion(questionId,questionName,questionAnnot)
+        questionService.updateQuestion(questionId,question.questionName,question.questionAnnot)
     }
 
     @Operation(summary = "Присоединение оценки к показателю")
-    @PutMapping(path = ["{questionId}/mark/{markId}"])
-    fun assignAnswertoOrg(
+    @PutMapping(path = ["{questionId}/question/{markId}"])
+    fun assignAnswerToMark(
         @Parameter(description = "номер для поиска показателя")
         @PathVariable questionId: Long,
         @Parameter(description = "номер для поиска ответа")
         @PathVariable markId: Long
     ): Question? {return questionService.addMarkToQuestion(questionId,markId)}
-
-    
 }

@@ -9,16 +9,16 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 class OrgConfig {
-//    @Bean
-//    fun commandLineRunnerOrg(@Autowired orgRepo: OrgRepo): CommandLineRunner{
-//        return CommandLineRunner{
-//            val tander = Organization(1L,
-//                    null,
-//                    "OAO Tander",
-//                    "Magnit",
-//                    "gallitsky@yandex.ru")
-//
-//            orgRepo.saveAll(listOf(tander))
-//        }
-//    }
+    @Bean
+    fun commandLineRunnerOrg(@Autowired orgRepo: OrgRepo): CommandLineRunner{
+        return CommandLineRunner{
+            val tander = Organization(1L,
+                    null,
+                    "OAO Tander",
+                    "Magnit",
+                    "gallitsky@yandex.ru")
+
+            orgRepo.saveAll(listOf(tander))
+        }
+    }
 }

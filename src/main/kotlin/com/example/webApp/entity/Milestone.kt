@@ -1,8 +1,10 @@
 package com.example.webApp.entity
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
+import jakarta.persistence.GeneratedValue
 import jakarta.persistence.Id
 import jakarta.persistence.OneToMany
 import jakarta.persistence.Table
@@ -15,24 +17,25 @@ import java.util.Date
 @Table(name = "milestone")
 data class Milestone (
     @Id
-    @JsonProperty("milestone_id")
-    @Column(name = "milestone_id")
+    @JsonProperty("milestoneId")
+    @Column(name = "milestoneId")
     var milestoneId: Long = 0L,
 
     @OneToMany(mappedBy = "milestone")
+    @JsonIgnore
     var answers: Set<Answer?>? = HashSet(),
 
-    @JsonProperty("date_from")
-    @Column(name = "date_from")
+    @JsonProperty("dateFrom")
+    @Column(name = "dateFrom")
     var dateFrom: LocalDate,
 
-    @JsonProperty("date_to")
-    @Column(name = "date_to")
+    @JsonProperty("dateTo")
+    @Column(name = "dateTo")
     var dateTo: LocalDate,
 
     @JsonProperty("year")
     @Column(name = "year")
-    var year: Year
+    var year: String
 
 ){
     override fun toString(): String {

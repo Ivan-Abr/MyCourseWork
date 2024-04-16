@@ -14,6 +14,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses
 import org.springframework.web.bind.annotation.*
 import java.util.*
 
+
+
+@CrossOrigin(origins = ["http://localhost:3000"])
 @RestController
 @RequestMapping("dm/v1/org")
 class OrgController (private var orgService: OrgService){
@@ -22,12 +25,12 @@ class OrgController (private var orgService: OrgService){
     @Operation(summary = "Выбор всех существующих организаций")
     @ApiResponses(
         ApiResponse(responseCode = "200", description = "Организации найдены", content = [Content(mediaType = "application/json",
-            array = ArraySchema(schema = Schema(implementation = Layer::class))
+            array = ArraySchema(schema = Schema(implementation = Organization::class))
         )]),
         ApiResponse(responseCode = "404", description = "Организации не найдены", content = [Content()]),
     )
     @GetMapping
-    fun getMarks(): List<Organization> {
+    fun getOrgs(): List<Organization> {
         return orgService.getOrgs()
     }
 
@@ -36,42 +39,37 @@ class OrgController (private var orgService: OrgService){
     @Operation(summary = "Выбор организации по его номеру")
     @ApiResponses(
         ApiResponse(responseCode = "200", description = "Организация найдена", content = [Content(mediaType = "application/json",
-            array = ArraySchema(schema = Schema(implementation = Answer::class)))]),
+            array = ArraySchema(schema = Schema(implementation = Organization::class)))]),
         ApiResponse(responseCode = "400",  description =  "Введен неверный номер", content = [Content()]),
         ApiResponse(responseCode = "404", description = "Организация не найдена", content = [Content()]),)
     @GetMapping(path = ["{orgId}"])
-    fun getMarkById(@PathVariable("orgId") orgId: Long): Optional<Organization> {
+    fun getOrgById(@PathVariable("orgId") orgId: Long): Optional<Organization> {
         return orgService.getOrgById(orgId)
     }
 
     @Operation(summary = "Создание новой организации")
     @PostMapping
-    fun registerNewMark(@Parameter(description = "объект  для добавления ",
+    fun registerNewOrg(@Parameter(description = "объект  для добавления ",
         schema = Schema(implementation = Answer::class))
-        @RequestBody book: Organization) {
-        orgService.addNewOrg(book)
+        @RequestBody org: Organization) {
+        orgService.addNewOrg(org)
     }
 
     @Operation(summary = "Удаление существующей организации по его номеру")
     @DeleteMapping(path = ["{orgId}"])
-    fun deleteMark(@Parameter(description = "номер для поиска организации")
+    fun deleteOrg(@Parameter(description = "номер для поиска организации")
         @PathVariable("orgId") orgId: Long?) {
         orgService.deleteOrg(orgId!!)
     }
 
     @Operation(summary = "Изменение существующей организации по её номеру")
     @PutMapping(path = ["{orgId}"])
-    fun updateMark(
+    fun updateOrg(
         @Parameter(description = "номер для поиска организации")
         @PathVariable("orgId") orgId: Long,
-        @Parameter(description = "новое имя")
-        @RequestParam(required = false) orgName: String,
-        @Parameter(description = "новое описание")
-        @RequestParam(required = false) orgAnnot: String
-    ){
-        orgService.updateOrg(orgId,orgName,orgAnnot)
+        @RequestBody org: Organization){
+        orgService.updateOrg(orgId,org.orgName,org.orgAnnot, org.orgContacts)
     }
-
 
     @Operation(summary = "Присоединение ответа к организации")
     @PutMapping(path = ["{orgId}/mark/{answerId}"])

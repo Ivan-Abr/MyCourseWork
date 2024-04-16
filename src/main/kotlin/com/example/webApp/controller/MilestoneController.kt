@@ -4,6 +4,7 @@ import com.example.webApp.entity.Answer
 import com.example.webApp.entity.Layer
 import com.example.webApp.entity.Milestone
 import com.example.webApp.service.MilestoneService
+import com.zaxxer.hikari.util.ClockSource.MillisecondClockSource
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.media.ArraySchema
@@ -17,6 +18,7 @@ import java.util.Optional
 
 
 @RestController
+@CrossOrigin(origins = ["http://localhost:3000"])
 @RequestMapping("dm/v1/milestone")
 class MilestoneController (private var milestoneService: MilestoneService){
 
@@ -24,7 +26,7 @@ class MilestoneController (private var milestoneService: MilestoneService){
     @Operation(summary = "Выбор всех существующих этапов")
     @ApiResponses(
         ApiResponse(responseCode = "200", description = "Этапы найдены", content = [Content(mediaType = "application/json",
-            array = ArraySchema(schema = Schema(implementation = Layer::class))
+            array = ArraySchema(schema = Schema(implementation = Milestone::class))
         )]),
         ApiResponse(responseCode = "404", description = "Этапы не найдены", content = [Content()]),
     )
@@ -36,7 +38,7 @@ class MilestoneController (private var milestoneService: MilestoneService){
     @Operation(summary = "Выбор этапа по его номеру")
     @ApiResponses(
         ApiResponse(responseCode = "200", description = "Этап найден", content = [Content(mediaType = "application/json",
-            array = ArraySchema(schema = Schema(implementation = Answer::class)))]),
+            array = ArraySchema(schema = Schema(implementation = Milestone::class)))]),
         ApiResponse(responseCode = "400",  description =  "Введен неверный номер", content = [Content()]),
         ApiResponse(responseCode = "404", description = "Этап не найден", content = [Content()]),)
     @GetMapping(path = ["{milestoneId}"])
@@ -47,7 +49,7 @@ class MilestoneController (private var milestoneService: MilestoneService){
     @Operation(summary = "Создание нового этапа")
     @PostMapping
     fun registerNewMileSt(@Parameter(description = "объект  для добавления ",
-        schema = Schema(implementation = Answer::class))
+        schema = Schema(implementation = Milestone::class))
                           @RequestBody milestone: Milestone) {
         milestoneService.addNewMileSt(milestone)
     }
@@ -64,12 +66,9 @@ class MilestoneController (private var milestoneService: MilestoneService){
     fun updateMileSt(
         @Parameter(description = "номер для поиска этапа")
         @PathVariable("milestoneId") milestoneId: Long,
-        @Parameter(description = "новая дата начала")
-        @RequestParam(required = false) dateFrom: LocalDate,
-        @Parameter(description = "новая дата окончания")
-        @RequestParam(required = false) dateTo: LocalDate
+        @RequestBody milestone: Milestone,
     ){
-        milestoneService.updateMileSt(milestoneId,dateFrom,dateTo)
+        milestoneService.updateMileSt(milestoneId, milestone.dateFrom,milestone.dateTo)
     }
 
     @Operation(summary = "Присоединение ответа к этапу")

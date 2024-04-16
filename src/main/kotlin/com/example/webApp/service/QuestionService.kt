@@ -60,6 +60,10 @@ class QuestionService (
     fun addMarkToQuestion(questionId: Long, markId: Long): Question?{
         val question = questionRepo.findById(questionId).get()
         val mark = markRepo.findById(markId).get()
+
+        mark.question = question
+        markRepo.save(mark)
+
         question.marks = (question.marks as MutableSet<Mark>?)?.apply { add(mark) }
         return questionRepo.save(question)
     }

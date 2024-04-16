@@ -20,6 +20,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 @RestController
+@CrossOrigin(origins = ["http://localhost:3000"])
 @RequestMapping("dm/v1/factor")
 class FactorController(private var factorService: FactorService) {
 
@@ -54,7 +55,7 @@ class FactorController(private var factorService: FactorService) {
     @Operation(summary = "Выбор фактора по его номеру")
     @ApiResponses(
         ApiResponse(responseCode = "200", description = "Фактор найден", content = [Content(mediaType = "application/json",
-            array = ArraySchema(schema = Schema(implementation = Answer::class)))]),
+            array = ArraySchema(schema = Schema(implementation = Factor::class)))]),
         ApiResponse(responseCode = "400",  description =  "Введен неверный номер", content = [Content()]),
         ApiResponse(responseCode = "404", description = "Фактор не найден", content = [Content()]),
     )
@@ -67,7 +68,7 @@ class FactorController(private var factorService: FactorService) {
     @Operation(summary = "Создание нового фактора")
     @PostMapping
     fun regNewFactor(@Parameter(description = "объект  для добавления ",
-        schema = Schema(implementation = Answer::class)) @RequestBody factor: Factor){
+        schema = Schema(implementation = Factor::class)) @RequestBody factor: Factor){
         factorService.addFactor(factor)
     }
 
@@ -83,20 +84,21 @@ class FactorController(private var factorService: FactorService) {
     fun updateFactor(
         @Parameter(description = "номер для поиска фактора")
         @PathVariable("factorId") factorId: Long,
-        @Parameter(description = "новое название")
-        @RequestParam(required = false) factorName: String
+        @Parameter(description = "новые данные")
+        @RequestBody factor: Factor,
+
     ){
-        factorService.updateFactor(factorId,factorName)
+        factorService.updateFactor(factorId,factor.factorName, factor.factorShortName)
     }
 
-    @Operation(summary = "Присоединение показателя к фактору")
+    @Operation(summary = "Присоединение вопроса к фактору")
     @PutMapping(path = ["{factorId}/question/{questionId}"])
-    fun assignMarktoFactor(
+    fun assignQuestionToFactor(
         @Parameter(description = "номер для поиска фактора")
         @PathVariable factorId: Long,
         @Parameter(description = "номер для поиска показателя")
         @PathVariable questionId: Long
-    ):Factor?{return factorService.assignMarksToFactor(factorId,questionId)}
+    ):Factor?{return factorService.assignQuestionsToFactor(factorId,questionId)}
 
 
 

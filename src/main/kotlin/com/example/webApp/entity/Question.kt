@@ -6,38 +6,58 @@ import jakarta.persistence.*
 
 @Entity
 @Table(name = "question")
-public class Question(
+data class Question(
     @Id
-    @JsonProperty("question_id")
-    @Column(name = "question_id")
-    var questionId: Long = 0L,
+    @JsonProperty("questionId")
+    @Column(name = "questionId")
+    var questionId: Long,
+
+    @JsonProperty("questionName")
+    @Column(name = "questionName", length = 100)
+    var questionName: String,
+
+    @JsonProperty("questionAnnot")
+    @Column(name = "questionAnnot", length = 300)
+    var questionAnnot: String,
 
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name = "layer_id")
-    var layer: Layer? = null,
+    @JoinColumn(name = "layerId")
+    var layer: Layer?,
+
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "factorId")
+    var factor: Factor?,
 
     @OneToMany
     @JsonIgnore
-    var marks: Set<Mark>? = HashSet(),
+    var marks: Set<Mark>?
+    )
+{
+    @get:JsonProperty("layerId")
+    val layerId: Long?
+            get(){ return this.layer?.layerId }
 
-    @ManyToOne
-    @JsonIgnore
-    @JoinColumn(name = "factor_id")
-    var factor: Factor,
+    @get:JsonProperty("factorId")
+    val factorId: Long?
+    get(){ return this.factor?.factorId }
 
-    @JsonProperty("question_name")
-    @Column(name = "question_name", length = 100)
-    var questionName: String = "",
 
-    @JsonProperty("question_annot")
-    @Column(name = "annot", length = 300)
-    var questionAnnot: String = "",
+    @get:JsonProperty("marksIds")
+    @set:JsonProperty("marksIds")
+    var marksIds: List<Long?>?
+    get(){
+        return this.marks?.map { mark -> mark?.markId } ?: emptyList()
+    } set(value) {}
 
-) {
 
 
     override fun toString(): String {
-        return "Question(questionId=$questionId, layer=$layer, questionName='$questionName', questionAnnot='$questionAnnot')"
-    }
+        return "Question(questionId=$questionId, questionName='$questionName', questionAnnot='$questionAnnot', " +
+                "layerId = '$layerId', factorId = '$factorId', marksIds = '$marksIds')" }
+
 }
+
+
+

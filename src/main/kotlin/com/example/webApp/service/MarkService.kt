@@ -53,6 +53,10 @@ class MarkService(private var markRepo: MarkRepo,
     fun addAnswersToMark(markId: Long,  answerId: Long): Mark?{
         val mark = markRepo.findById(markId).get()
         val answer = answerRepo.findById(answerId).get()
+
+        answer.mark = mark
+        answerRepo.save(answer)
+
         mark.answers = (mark.answers as MutableSet<Answer>).apply { add(answer) }
         return markRepo.save(mark)
     }

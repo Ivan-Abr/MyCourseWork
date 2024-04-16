@@ -8,21 +8,32 @@ import jakarta.persistence.*
 @Table(name = "factor")
 class Factor(
     @Id
-    @JsonProperty("factor_id")
-    @Column(name = "factor_id")
+    @JsonProperty("factorId")
+    @Column(name = "factorId")
     var factorId: Long,
 
     @OneToMany(mappedBy="factor")
     @JsonIgnore
     var questions:Set<Question?>? = HashSet(),
 
-    @JsonProperty("factor_name")
-    @Column(name = "factor_name")
+    @JsonProperty("factorName")
+    @Column(name = "factorName")
     var factorName:String,
 
-    @JsonProperty("factor_short_name")
-    @Column(name = "factor_short_name")
+    @JsonProperty("factorShortName")
+    @Column(name = "factorShortName")
     var factorShortName: String
 
 ) {
+
+    @get:JsonProperty("questionsIds")
+    @set:JsonProperty("questionsIds")
+    var questionsIds: List<Long?>?
+        get() { return this.questions?.map { it?.questionId } ?: emptyList() }
+        set(value) {}
+
+    override fun toString(): String {
+        return "Factor(factorId=$factorId, questions=$questions, factorName='$factorName', factorShortName='$factorShortName', " +
+                "questionsIds = '$questionsIds')"
+    }
 }

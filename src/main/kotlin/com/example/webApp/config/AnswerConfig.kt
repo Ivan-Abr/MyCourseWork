@@ -10,11 +10,11 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 class AnswerConfig {
-//    @Bean
-//    fun commandLineRunner(@Autowired answerRepo: AnswerRepo): CommandLineRunner{
-//        return CommandLineRunner {
-//            val first_test = Answer(1L,null,null, null)
-//            answerRepo.saveAll(listOf(first_test))
-//        }
-//    }
+    @Bean
+    fun commandLineRunner(@Autowired answerRepo: AnswerRepo): CommandLineRunner{
+        return CommandLineRunner {
+            val first_test = Answer(1L,null,null, null)
+            answerRepo.saveAll(listOf(first_test))
+        }
+    }
 }

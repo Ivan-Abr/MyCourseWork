@@ -15,7 +15,8 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 import java.util.*
 
-@Controller
+@RestController
+@CrossOrigin(origins = ["http://localhost:3000"])
 @RequestMapping("dm/v1/mark")
 class MarkController(private var markService: MarkService) {
     @Operation(summary = "Выбор всех существующих оценок")
@@ -34,7 +35,7 @@ class MarkController(private var markService: MarkService) {
     @Operation(summary = "Выбор оценки по его номеру")
     @ApiResponses(
         ApiResponse(responseCode = "200", description = "Оценка найдена", content = [Content(mediaType = "application/json",
-            array = ArraySchema(schema = Schema(implementation = Answer::class))
+            array = ArraySchema(schema = Schema(implementation = Mark::class))
         )]),
         ApiResponse(responseCode = "400",  description =  "Введен неверный номер", content = [Content()]),
         ApiResponse(responseCode = "404", description = "Оценка не найдена", content = [Content()]),
@@ -48,7 +49,7 @@ class MarkController(private var markService: MarkService) {
     @Operation(summary = "Создание нового оценки")
     @PostMapping
     fun regNewMark(@Parameter(description = "объект  для добавления ",
-        schema = Schema(implementation = Answer::class)
+        schema = Schema(implementation = Mark::class)
     ) @RequestBody mark: Mark
     ){
         markService.postMark(mark)
@@ -66,12 +67,11 @@ class MarkController(private var markService: MarkService) {
     fun updateMark(
         @Parameter(description = "номер для поиска оценки")
         @PathVariable("markId") markId: Long,
-        @Parameter(description = "новое название")
-        @RequestParam(required = false) markName: String,
-        @Parameter(description = "новое значение")
-        @RequestParam(required = false) markValue: Int
+        @RequestBody markData: Mark,
+
+
     ){
-        markService.updateMark(markId,markName, markValue)
+        markService.updateMark(markId,markData.markName, markData.markValue)
     }
 
     @Operation(summary = "Присоединение показателя к слою")
