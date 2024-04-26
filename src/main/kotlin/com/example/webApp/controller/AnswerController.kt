@@ -17,6 +17,7 @@ import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 
 
 @RestController
+@CrossOrigin(origins = ["http://localhost:3011"])
 @RequestMapping("dm/v1/answer")
 class AnswerController(private var answerService: AnswerService) {
 

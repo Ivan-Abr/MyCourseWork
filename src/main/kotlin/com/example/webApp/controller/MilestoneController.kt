@@ -18,7 +18,7 @@ import java.util.Optional
 
 
 @RestController
-@CrossOrigin(origins = ["http://localhost:3000"])
+@CrossOrigin(origins = ["http://localhost:3011"])
 @RequestMapping("dm/v1/milestone")
 class MilestoneController (private var milestoneService: MilestoneService){
 

@@ -31,19 +31,19 @@ class Mark (
     var question: Question? = null,
 ){
 
-    @get:JsonProperty("answerIds")
-    @set:JsonProperty("answerIds")
-    var answerIds: List<Long?>?
-        get() {
-            return this.answers?.map { answer -> answer?.answerId }
-        } set(value) {}
+//    @get:JsonProperty("answerIds")
+//    @set:JsonProperty("answerIds")
+//    var answerIds: List<Long?>?
+//        get() {
+//            return this.answers?.map { answer -> answer?.answerId }
+//        } set(value) {}
 
 
-    @get:JsonProperty("questionId")
-    val questionId: Long?
-        get() {
-            return this.question?.questionId;
-        }
+//    @get:JsonProperty("questionId")
+//    val questionId: Long?
+//        get() {
+//            return this.question?.questionId;
+//        }
 
 
     override fun toString(): String {

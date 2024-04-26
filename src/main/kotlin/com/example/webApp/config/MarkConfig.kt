@@ -12,7 +12,9 @@ class MarkConfig {
     @Bean
     fun commandLineRunnerMark(@Autowired markRepo: MarkRepo): CommandLineRunner{
         return CommandLineRunner{
-        val mark1 = Mark(1L,"mkName",1, null,null)
-        markRepo.saveAll(listOf(mark1))    }
+            val mark1 = Mark(1L,"Плохо",0, null,null);
+            val mark2 = Mark(2L,"Норм",1, null,null)
+            val mark3 = Mark(3L,"Хорошо",2, null,null)
+            markRepo.saveAll(listOf(mark1, mark2, mark3))    }
     }
 }

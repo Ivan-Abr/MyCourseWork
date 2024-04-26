@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*
 import java.util.*
 
 @RestController
-@CrossOrigin(origins = ["http://localhost:3000"])
+@CrossOrigin(origins = ["http://localhost:3011"])
 @RequestMapping("dm/v1/layer")
 class LayerController(private var layerService: LayerService) {
 

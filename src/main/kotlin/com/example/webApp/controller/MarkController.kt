@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*
 import java.util.*
 
 @RestController
-@CrossOrigin(origins = ["http://localhost:3000"])
+@CrossOrigin(origins = ["http://localhost:3011"])
 @RequestMapping("dm/v1/mark")
 class MarkController(private var markService: MarkService) {
     @Operation(summary = "Выбор всех существующих оценок")

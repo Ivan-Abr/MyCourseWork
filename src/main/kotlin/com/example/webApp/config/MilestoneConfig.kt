@@ -12,17 +12,17 @@ import java.time.Year
 
 @Configuration
 class MilestoneConfig {
-    @Bean
-    fun commandLineRunnerMilestone(@Autowired milestoneRepo: MilestoneRepo): CommandLineRunner{
-        return CommandLineRunner {
-            val firstKvartal  = Milestone(
-                1L,
-                null,
-                LocalDate.of(2011,Month.DECEMBER, 10),
-                LocalDate.of(2012,Month.APRIL, 1),
-                "2012"
-            )
-            milestoneRepo.saveAll(listOf(firstKvartal))
-        }
-    }
+//    @Bean
+//    fun commandLineRunnerMilestone(@Autowired milestoneRepo: MilestoneRepo): CommandLineRunner{
+//        return CommandLineRunner {
+//            val firstKvartal  = Milestone(
+//                1L,
+//                null,
+//                LocalDate.of(2011,Month.DECEMBER, 10),
+//                LocalDate.of(2012,Month.APRIL, 1),
+//                "2012"
+//            )
+//            milestoneRepo.saveAll(listOf(firstKvartal))
+//        }
+//    }
 }

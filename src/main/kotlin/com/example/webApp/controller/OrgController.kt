@@ -16,7 +16,7 @@ import java.util.*
 
 
 
-@CrossOrigin(origins = ["http://localhost:3000"])
+@CrossOrigin(origins = ["http://localhost:3011"])
 @RestController
 @RequestMapping("dm/v1/org")
 class OrgController (private var orgService: OrgService){
