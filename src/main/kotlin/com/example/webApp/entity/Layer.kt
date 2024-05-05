@@ -21,12 +21,13 @@ data class Layer(
     @Column(name = "layerName", length = 100)
     var layerName: String)
 {
-    @get:JsonProperty("questionsIds")
-    @set:JsonProperty("questionsIds")
-    var questionsIds: List<Long?>?
-        get() { return this.questions?.map { it?.questionId } ?: emptyList() }
-        set(value) {}
+
+//    @get:JsonProperty("questionsIds")
+//    @set:JsonProperty("questionsIds")
+//    var questionsIds: List<Long?>?
+//        get() { return this.questions?.map { it?.questionId } ?: emptyList() }
+//        set(value) {}
 
     override fun toString(): String {
-        return "Layer(layerId=$layerId, layerName='$layerName', questionsIds = '$questionsIds')" }
+        return "Layer(layerId=$layerId, layerName='$layerName')" }
 }

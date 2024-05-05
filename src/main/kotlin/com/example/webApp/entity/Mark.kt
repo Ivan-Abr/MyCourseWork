@@ -21,11 +21,11 @@ class Mark (
     @Column(name = "markValue")
     var markValue: Int,
 
-    @OneToMany(mappedBy = "mark")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "mark")
     @JsonIgnore
     var answers: Set<Answer>? = HashSet(),
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     @JoinColumn(name = "question_id")
     var question: Question? = null,

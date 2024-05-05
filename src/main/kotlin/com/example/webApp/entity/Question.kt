@@ -21,41 +21,40 @@ data class Question(
     var questionAnnot: String,
 
     @ManyToOne
-    @JsonIgnore
+//    @JsonIgnore
     @JoinColumn(name = "layerId")
     var layer: Layer?,
 
     @ManyToOne
-    @JsonIgnore
+//    @JsonIgnore
     @JoinColumn(name = "factorId")
     var factor: Factor?,
 
     @OneToMany
-    @JsonIgnore
+//    @JsonIgnore
     var marks: Set<Mark>?
     )
 {
-    @get:JsonProperty("layerId")
-    val layerId: Long?
-            get(){ return this.layer?.layerId }
-
-    @get:JsonProperty("factorId")
-    val factorId: Long?
-    get(){ return this.factor?.factorId }
-
-
-    @get:JsonProperty("marksIds")
-    @set:JsonProperty("marksIds")
-    var marksIds: List<Long?>?
-    get(){
-        return this.marks?.map { mark -> mark?.markId } ?: emptyList()
-    } set(value) {}
+//    @get:JsonProperty("layerId")
+//    val layerId: Long?
+//            get(){ return this.layer?.layerId }
+//
+//    @get:JsonProperty("factorId")
+//    val factorId: Long?
+//    get(){ return this.factor?.factorId }
+//
+//
+//    @get:JsonProperty("marksIds")
+//    @set:JsonProperty("marksIds")
+//    var marksIds: List<Long?>?
+//    get(){
+//        return this.marks?.map { mark -> mark?.markId } ?: emptyList()
+//    } set(value) {}
 
 
 
     override fun toString(): String {
-        return "Question(questionId=$questionId, questionName='$questionName', questionAnnot='$questionAnnot', " +
-                "layerId = '$layerId', factorId = '$factorId', marksIds = '$marksIds')" }
+        return "Question(questionId=$questionId, questionName='$questionName', questionAnnot='$questionAnnot'"}
 
 }
 

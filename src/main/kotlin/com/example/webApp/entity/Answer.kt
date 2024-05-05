@@ -20,12 +20,12 @@ public class Answer(
         var mark: Mark?,
 
     @ManyToOne
-    @JsonIgnore
+//    @JsonIgnore
         @JoinColumn(name="orgId")
         var organization: Organization?,
 
     @ManyToOne
-    @JsonIgnore
+//    @JsonIgnore
         @JoinColumn(name="milestoneId")
         var milestone: Milestone?,
 
@@ -33,26 +33,26 @@ public class Answer(
 ){
 
 
-    @get:JsonProperty("markId")
-    val markId: Long?
-        get() {
-            return this.mark?.markId;
-        }
-
-    @get:JsonProperty("orgId")
-    val orgId: Long?
-        get() {
-            return this.organization?.orgId
-        }
-
-    @get: JsonProperty("milestoneId")
-    val milestoneId: Long?
-        get() {
-            return this.milestone?.milestoneId
-        }
+//    @get:JsonProperty("markId")
+//    val markId: Long?
+//        get() {
+//            return this.mark?.markId;
+//        }
+//
+//    @get:JsonProperty("orgId")
+//    val orgId: Long?
+//        get() {
+//            return this.organization?.orgId
+//        }
+//
+//    @get: JsonProperty("milestoneId")
+//    val milestoneId: Long?
+//        get() {
+//            return this.milestone?.milestoneId
+//        }
 
     override fun toString(): String {
-        return "Answer(answerId=$answerId, markId=$markId, orgId=$orgId, milestoneId=$milestoneId)"
+        return "Answer(answerId=$answerId)"
     }
 
 
